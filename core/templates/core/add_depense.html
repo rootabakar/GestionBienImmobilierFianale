@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block titre %}
+DEPENSE ADD
+{% endblock %}
+
+{% block main %}
+    <h1>ADD DEPENSE</h1>
+    {% if done %}
+        <div class="alert alert-sucess">{{ done }}</div>
+    {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form | crispy }}
+        <button class="btn btn-primary">ADD</button>
+    </form>
+{% endblock %}

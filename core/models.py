@@ -60,9 +60,12 @@ class Biens(models.Model):
     quartier = models.CharField(max_length=255)
     nbrePiece = models.IntegerField(default=1)
     nbreChambre = models.IntegerField(default=1)
-    gestionnaire = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     proprietaire = models.ForeignKey(Proprietaire, on_delete=models.CASCADE)
     dateCreation = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.loyer
 
 
 class Locataire(models.Model):

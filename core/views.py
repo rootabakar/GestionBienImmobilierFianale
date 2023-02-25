@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model, logout, authenticate, login
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
-from core.forms import UserAddForm
+from core.forms import UserAddForm, AddBienForm, DepenseForm
 from core.models import Proprietaire, User
 
 Utilisateur = get_user_model()
@@ -76,7 +76,6 @@ def is_superuser(user):
     return user.is_superuser
 
 
-@user_passes_test(is_superuser, login_url='/connexion/')
 def index(request):
     return render(request, 'core/index.html', locals())
 
@@ -95,3 +94,23 @@ def liste_proprietaire(request):
 
 def liste_gestionnaire(request):
     return render(request, 'core/liste_gestionnaire.html', locals())
+
+
+def ajout_bien(request):
+    if request.method == 'POST':
+        form = AddBienForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.user = request.user
+            instance.save()
+            return redirect('ajou_bien')
+    else:
+        form = AddBienForm()
+    return render(request, 'core/add_bien.html', locals())
+
+
+def ajout_depense(request):
+    form = DepenseForm()
+    return render(request, 'core/add_depense.html', locals())
+
+
